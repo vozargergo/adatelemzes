@@ -4,6 +4,8 @@ library(tidyverse)
 library(readr)
 library(colorspace)
 library(corrplot)
+library(rbin)
+library(data.table)
 
 spotify <- read.csv("data/spotify.csv", head=TRUE, sep=",")
 
@@ -24,21 +26,42 @@ barplot(vektorom)
 amikell2 %>% summarise_all(mean)
 amikell %>% summarise_all(mean)
 
-#táncolhatóság
+#népszerûség adott változónként
+ggplot(spotify, aes(x = speechiness, y = popularity)) +
+  geom_bin2d()
+
+ggplot(spotify, aes(x = danceability, y = popularity)) +
+  geom_bin2d()
+
+ggplot(spotify, aes(x = energy, y = popularity)) +
+  geom_bin2d()
+
+ggplot(spotify, aes(x = loudness, y = popularity)) +
+  geom_bin2d()
+
+ggplot(spotify, aes(x = acousticness, y = popularity)) +
+  geom_bin2d()
+
+ggplot(spotify, aes(x = instrumentalness, y = popularity)) +
+  geom_bin2d()
+###############################################################
+
+#táncolhatóság density
 ggplot(data=amikell2, aes(x=danceability)) +geom_density() +geom_histogram(aes(y=..density..), alpha=0.5) + theme_minimal()
-#energikusság
+
+#energikusság density
 ggplot(data=amikell2, aes(x=energy)) +geom_density() +geom_histogram(aes(y=..density..), alpha=0.5) + theme_minimal()
 
-#hangerõ
+#hangerõ density
 ggplot(data=amikell, aes(x=loudness)) +geom_density() +geom_histogram(aes(y=..density..), alpha=0.5) + theme_minimal()
 
-#beszédesség
+#beszédesség density
 ggplot(data=amikell2, aes(x=speechiness)) +geom_density() +geom_histogram(aes(y=..density..), alpha=0.5) + theme_minimal()
 
-#akusztikusság
+#akusztikusság density
 ggplot(data=spotify, aes(x=acousticness)) +geom_density() +geom_histogram(aes(y=..density..), alpha=0.5) + theme_minimal()
-
-#hangszeresség
+ 
+#hangszeresség density
 ggplot(data=amikell, aes(x=instrumentalness)) +geom_density() +geom_histogram(aes(y=..density..), alpha=0.5) + theme_minimal()
 
 #0-11-ig hozzárendelni az értékeket egy Hanghoz, majd kiiratni
